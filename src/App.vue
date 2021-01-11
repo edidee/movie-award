@@ -1,17 +1,30 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    
+    <DisplayMovies v-bind:movies='movies' />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import DisplayMovies from './components/DisplayMovies'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    DisplayMovies
+  },
+  data () {
+    return {
+      movies: []
+    }
+  },
+   methods: {
+     searchMovie(){
+       this.$http.get(' http://www.omdbapi.com/?i=tt3896198&apikey=42a545b2')
+         .then(response => (this.movies = response.data))
+         .catch(error => console.log(error))
+          .finally(() => this.loading = false)
+     }
   }
 }
 </script>
