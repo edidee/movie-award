@@ -1,19 +1,13 @@
 <template>
     <div class="container">
-       <h1>The Shoppies</h1>
-       <div class="input-div">
-           <form action="">
-               <label for="title">Movie title:</label><br>
-               <input type="text" id="title" placeholder="enter movie title" v-model="keyword">
-               <button @click.prevent="searchMovie">Search</button>
-           </form>
-       </div>
-       <div class="display-movie" v-for="movie in movies" :key="movie.imdbID">
+
+        <div class="display-movie"  :key="movies.imdbID">
            <p>Results from search:</p>
-            <h3>Title: {{ movie.Title }}</h3>
+            <h3>Title: {{ movies.Title }}</h3>
+            <p>Year of Release: {{ movies.Year }}</p>
+            <p>Rated: {{ movies.Rated }}</p>
 
        </div>
-        
     
     </div>
 </template>

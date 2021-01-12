@@ -1,5 +1,14 @@
 <template>
   <div id="app">
+     <h1>The Shoppies</h1>
+       <div class="input-div">
+           <form action="">
+               <label for="title">Movie title:</label><br>
+               <input type="text" id="title" placeholder="enter movie title" v-model="keyword">
+               <button @click.prevent="searchMovie">Search</button>
+           </form>
+       </div>
+       
     
     <DisplayMovies v-bind:movies='movies' />
   </div>
@@ -13,29 +22,53 @@ export default {
   components: {
     DisplayMovies
   },
-  data () {
-    return {
+  data: () => ({
+      keyword: "",
       movies: []
-    }
-  },
+    
+  }),
    methods: {
-     searchMovie(){
-       this.$http.get(' http://www.omdbapi.com/?i=tt3896198&apikey=42a545b2')
-         .then(response => (this.movies = response.data))
+     searchMovie() {
+       this.$http.get(' http://www.omdbapi.com/?i=tt3896198&apikey=42a545b2',
+       {
+         params: {
+           search: this.keyword
+         }
+       })
+         .then(response => {
+           if (this.keyword === ''){
+             return;
+           }
+           this.movies = response.data;
+           this.keyword = ''
+         } )
          .catch(error => console.log(error))
           .finally(() => this.loading = false)
      }
-  }
+  },
+  // watch: {
+  //   keyword(newKeyword, oldKeyword) {
+  //     console.log(`New keyword is ${newKeyword}`);
+  //     console.log(`Old keyword is ${oldKeyword}`);
+  //     this.checkName();
+  //   }
+  // }
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+      font-family: Avenir, Helvetica, Arial, sans-serif;
+        width: 80%;
+        height: auto;
+        background-color: #eee;
+        margin: 0 auto;
 }
+ 
+
+.input-div{
+        width: 70%;
+        background-color: #fff;
+        margin: 0 auto;
+    }
 </style>
