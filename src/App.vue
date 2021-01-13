@@ -24,7 +24,8 @@ export default {
   },
   data: () => ({
       keyword: "",
-      movies: []
+      movies: {},
+      displayVar: 'block'
     
   }),
    methods: {
@@ -44,6 +45,10 @@ export default {
          } )
          .catch(error => console.log(error))
           .finally(() => this.loading = false)
+     },
+
+     displayResult() {
+        this.displayVar = 'block'
      }
   },
   // watch: {

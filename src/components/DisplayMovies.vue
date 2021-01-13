@@ -1,7 +1,7 @@
 <template>
     <div class="container">
 
-        <div class="display-movie"  :key="movies.imdbID">
+        <div class="display-movie" v-for="movies in filterWord" :key="movies.imdbID" :style="{ display: displayVar}">
            <p>Results from search:</p>
             <h3>Title: {{ movies.Title }}</h3>
             <p>Year of Release: {{ movies.Year }}</p>
@@ -17,11 +17,20 @@ export default {
     name: 'DisplayMovies',
     props: { 
         movies: Array,
-        searchMovie: Function
+        
     },
     data: () => ({
-        keyword: ""
+        keyword: "",
+        displayVar: 'block'
     }),
+
+    computed: {
+        filterWord() {
+            return this.movies.filter(movies => {
+                return movies.Title.toLowerCase().includes(this.keyword.toLowerCase())
+            })
+        }
+    }
     // methods: {
     //     searchMovie() {
     //         console.log(`Checking name: ${this.keyword}`);
@@ -31,20 +40,6 @@ export default {
 </script>
 
 <style scoped>
-    .container{
-        width: 80%;
-        height: auto;
-        background-color: #eee;
-        margin: 0 auto;
-    }
-
-    .input-div{
-        width: 70%;
-        background-color: #fff;
-        margin: 0 auto;
-    }
-
-    /* .display-movie{
-        display: none;
-    } */
+    
+    
 </style>
